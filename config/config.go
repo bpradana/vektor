@@ -7,6 +7,7 @@ import (
 )
 
 type Config struct {
+	Host     string `json:"host"`
 	Port     string `json:"port"`
 	DataPath string `json:"data_path"`
 }

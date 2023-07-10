@@ -1,25 +1,27 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"vektor/config"
-	"vektor/internal/handler"
+	"vektor/internal/router"
 )
 
 type Server struct {
-	config  config.Config
-	handler handler.HandlerContract
+	config config.Config
+	router router.Router
 }
 
-func NewServer(config config.Config, handler handler.HandlerContract) ServerContract {
+func NewServer(config config.Config, router *router.Router) ServerContract {
 	return &Server{
-		config:  config,
-		handler: handler,
+		config: config,
+		router: *router,
 	}
 }
 
 func (s *Server) Start() error {
-	listener, err := net.Listen("tcp", s.config.Port)
+	address := fmt.Sprintf("%s:%s", s.config.Host, s.config.Port)
+	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		return err
 	}
@@ -30,6 +32,6 @@ func (s *Server) Start() error {
 			return err
 		}
 
-		go s.handler.Handle(conn)
+		go s.router.Route(conn)
 	}
 }
