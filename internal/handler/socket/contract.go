@@ -1,4 +1,4 @@
-package handler
+package socket
 
 import (
 	"net"

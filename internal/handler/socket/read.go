@@ -1,4 +1,4 @@
-package handler
+package socket
 
 import (
 	"fmt"
@@ -8,29 +8,27 @@ import (
 	"vektor/internal/usecase"
 )
 
-type SearchHandler struct {
+type ReadHandler struct {
 	usecase usecase.UsecaseContract
 }
 
-func NewSearchHandler(usecase usecase.UsecaseContract) HandlerContract {
-	return &SearchHandler{
+func NewReadHandler(usecase usecase.UsecaseContract) HandlerContract {
+	return &ReadHandler{
 		usecase: usecase,
 	}
 }
 
-func (h *SearchHandler) Handle(conn net.Conn, query common.Query) error {
+func (h *ReadHandler) Handle(conn net.Conn, query common.Query) error {
 	start_time := time.Now()
 
-	data, err := h.usecase.Search(query.Vectors[0], query.Option)
+	data, err := h.usecase.Read(query.Key)
 	if err != nil {
 		conn.Write([]byte(err.Error()))
-		conn.Close()
 		return err
 	}
 
 	run_time := time.Since(start_time).Milliseconds()
 	conn.Write([]byte(fmt.Sprintf("%s %s success, took %d ms", query.Action, data.Key, run_time)))
-	conn.Close()
 
 	return nil
 }

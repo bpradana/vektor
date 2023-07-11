@@ -1,4 +1,4 @@
-package handler
+package socket
 
 import (
 	"fmt"
@@ -8,29 +8,27 @@ import (
 	"vektor/internal/usecase"
 )
 
-type CreateHandler struct {
+type UpdateHandler struct {
 	usecase usecase.UsecaseContract
 }
 
-func NewCreateHandler(usecase usecase.UsecaseContract) HandlerContract {
-	return &CreateHandler{
+func NewUpdateHandler(usecase usecase.UsecaseContract) HandlerContract {
+	return &UpdateHandler{
 		usecase: usecase,
 	}
 }
 
-func (h *CreateHandler) Handle(conn net.Conn, query common.Query) error {
+func (h *UpdateHandler) Handle(conn net.Conn, query common.Query) error {
 	start_time := time.Now()
 
-	data, err := h.usecase.Create(query.Key, query.Vectors)
+	data, err := h.usecase.Update(query.Key, query.Vectors)
 	if err != nil {
 		conn.Write([]byte(err.Error()))
-		conn.Close()
 		return err
 	}
 
 	run_time := time.Since(start_time).Milliseconds()
 	conn.Write([]byte(fmt.Sprintf("%s %s success, took %d ms", query.Action, data.Key, run_time)))
-	conn.Close()
 
 	return nil
 }

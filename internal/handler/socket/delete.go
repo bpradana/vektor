@@ -1,4 +1,4 @@
-package handler
+package socket
 
 import (
 	"fmt"
@@ -24,13 +24,11 @@ func (h *DeleteHandler) Handle(conn net.Conn, query common.Query) error {
 	err := h.usecase.Delete(query.Key)
 	if err != nil {
 		conn.Write([]byte(err.Error()))
-		conn.Close()
 		return err
 	}
 
 	run_time := time.Since(start_time).Milliseconds()
 	conn.Write([]byte(fmt.Sprintf("%s %s success, took %d ms", query.Action, query.Key, run_time)))
-	conn.Close()
 
 	return nil
 }

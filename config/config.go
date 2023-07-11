@@ -7,9 +7,10 @@ import (
 )
 
 type Config struct {
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	DataPath string `json:"data_path"`
+	Host       string `json:"host"`
+	Port       string `json:"port"`
+	DataPath   string `json:"data_path"`
+	BufferSize int    `json:"buffer_size"`
 }
 
 func NewConfig() Config {

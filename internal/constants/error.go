@@ -8,4 +8,5 @@ const (
 	ERROR_DECODING_DATA      = "error decoding data %v"
 	ERROR_READING_DB         = "error reading db"
 	ERROR_INVALID_QUERY      = "error invalid query"
+	ERROR_INVALID_ACTION     = "error invalid action"
 )

@@ -7,19 +7,19 @@ import (
 	"vektor/internal/router"
 )
 
-type Server struct {
+type SocketServer struct {
 	config config.Config
-	router router.Router
+	router router.SocketRouter
 }
 
-func NewServer(config config.Config, router *router.Router) ServerContract {
-	return &Server{
+func NewSocketServer(config config.Config, router *router.SocketRouter) ServerContract {
+	return &SocketServer{
 		config: config,
 		router: *router,
 	}
 }
 
-func (s *Server) Start() error {
+func (s *SocketServer) Start() error {
 	address := fmt.Sprintf("%s:%s", s.config.Host, s.config.Port)
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
