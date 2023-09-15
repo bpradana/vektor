@@ -4,7 +4,7 @@ build: binary
 
 binary:
 	@echo "building binary..."
-	@go build -o main ./main.go
+	@go build -o vektor ./main.go
 
 
 clean:
