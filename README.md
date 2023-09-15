@@ -5,16 +5,24 @@ Vektor is a simple (somewhat fast) vector database written in Go.
 ### From source
 ```bash
 $ git clone https://github.com/bpradana/vektor.git
+$ cd vektor
 $ make install
 $ make build
 $ ./vektor
 ```
-
 ### Running with make
 ```bash
 $ git clone https://github.com/bpradana/vektor.git
+$ cd vektor
 $ make install
 $ make start
+```
+### Running with docker
+```bash
+$ git clone https://github.com/bpradana/vektor.git
+$ cd vektor
+$ docker build -t vektor:latest .
+$ docker run -p 8080:8080 vektor
 ```
 
 ## Query
@@ -36,7 +44,7 @@ UPDATE vector1 [[1,2,3],[4,5,6]]
 ### Search a vector
 ```sql
 SEARCH <COSINE|EUCLIDEAN|EUCLIDEAN_L2> <threshold> <vector_value>
-SEARCH COSINE 0.5 [[1,2,3],[4,5,6]]
+SEARCH COSINE 0.5 [1,2,3]
 ```
 ### Delete a vector
 ```sql
