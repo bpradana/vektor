@@ -37,11 +37,16 @@ if __name__ == "__main__":
     client = Client("localhost", 8080)
     client.connect()
 
-    data_num = 100
-    dimension = 2662
-    option = "EUCLIDEAN"
+    data_num = 10
+    dimension = 1000
+    num_vectors = 10
+    option = "EUCLIDEAN_L2"  # "EUCLIDEAN", "COSINE", "EUCLIDEAN_L2"
+    threshold = 0.9
     keys = [generate_key() for _ in range(data_num)]
-    vectors = [generate_vectors(dimension=dimension) for _ in range(data_num)]
+    vectors = [
+        generate_vectors(num_vectors=num_vectors, dimension=dimension)
+        for _ in range(data_num)
+    ]
 
     for key, vector in zip(keys, vectors):
         request = f"CREATE {key} {vector};"
@@ -58,8 +63,8 @@ if __name__ == "__main__":
         response = client.send_request(request)
         print(response)
 
-    for key in keys:
-        request = f"SEARCH {option} {str([random.random() for _ in range(dimension)]).replace(' ', '')};"
+    for _ in range(data_num):
+        request = f"SEARCH {option} {str(threshold)} {str([random.random() for _ in range(dimension)]).replace(' ', '')};"
         response = client.send_request(request)
         print(response)
 
