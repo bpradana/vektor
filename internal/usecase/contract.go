@@ -9,5 +9,5 @@ type UsecaseContract interface {
 	Read(key string) (entity.Data, error)
 	Update(key string, vectors [][]float64) (entity.Data, error)
 	Delete(key string) error
-	Search(vector []float64, method string) (entity.Data, error)
+	Search(vector []float64, method string, threshold float64) (entity.Data, error)
 }

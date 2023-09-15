@@ -22,7 +22,7 @@ func (r *Repository) Read(key string) (entity.Data, error) {
 	var data entity.Data
 	err = json.NewDecoder(file).Decode(&data)
 	if err != nil {
-		log.Printf("[vektor] [internal] [repository] [delete] [Delete] error: %s", err)
+		log.Printf("[vektor] [internal] [repository] [read] [Read] error: %s", err)
 		return entity.Data{}, fmt.Errorf(constants.ERROR_DECODING_DATA, data)
 	}
 

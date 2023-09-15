@@ -3,15 +3,17 @@ package common
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 	"vektor/internal/constants"
 )
 
 type Query struct {
-	Action  string
-	Option  string
-	Key     string
-	Vectors [][]float64
+	Action    string
+	Method    string
+	Threshold float64
+	Key       string
+	Vectors   [][]float64
 }
 
 func ParseQuery(query string) (*Query, error) {
@@ -43,18 +45,22 @@ func ParseQuery(query string) (*Query, error) {
 
 		q.Vectors = vectors
 	case constants.ACTION_SEARCH:
-		if len(parts) != 3 {
+		if len(parts) != 4 {
 			return nil, fmt.Errorf(constants.ERROR_INVALID_QUERY)
 		}
 
 		vector := []float64{}
-		err := json.Unmarshal([]byte(parts[2]), &vector)
+		err := json.Unmarshal([]byte(parts[3]), &vector)
 		if err != nil {
 			return nil, fmt.Errorf(constants.ERROR_DECODING_DATA, err)
 		}
 
 		q.Vectors = [][]float64{vector}
-		q.Option = parts[1]
+		q.Method = parts[1]
+		q.Threshold, err = strconv.ParseFloat(parts[2], 64)
+		if err != nil {
+			return nil, fmt.Errorf(constants.ERROR_DECODING_DATA, err)
+		}
 		q.Key = ""
 	}
 

@@ -7,7 +7,7 @@ import (
 	"vektor/internal/entity"
 )
 
-func (u *Usecase) Search(vector []float64, method string) (entity.Data, error) {
+func (u *Usecase) Search(vector []float64, method string, threshold float64) (entity.Data, error) {
 	methodFunc := u.methodSwitcher(method)
 
 	files, err := u.repository.Files()
@@ -30,6 +30,12 @@ func (u *Usecase) Search(vector []float64, method string) (entity.Data, error) {
 			minDistance = data.MinDistance
 			key = data.Key
 		}
+	}
+
+	if math.Abs(minDistance) > threshold {
+		return entity.Data{
+			Key: "unknown",
+		}, nil
 	}
 
 	return entity.Data{
