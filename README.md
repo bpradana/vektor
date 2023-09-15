@@ -10,14 +10,14 @@ $ make install
 $ make build
 $ ./vektor
 ```
-### Running with make
+### Running with Make
 ```bash
 $ git clone https://github.com/bpradana/vektor.git
 $ cd vektor
 $ make install
 $ make start
 ```
-### Running with docker
+### Running with Docker
 ```bash
 $ git clone https://github.com/bpradana/vektor.git
 $ cd vektor
