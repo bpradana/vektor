@@ -1,0 +1,9 @@
+package constants
+
+const (
+	ACTION_CREATE = "CREATE"
+	ACTION_READ   = "READ"
+	ACTION_UPDATE = "UPDATE"
+	ACTION_DELETE = "DELETE"
+	ACTION_SEARCH = "SEARCH"
+)
